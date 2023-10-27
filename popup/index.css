@@ -1,0 +1,10 @@
+body {
+	background: #131921;
+	color: #ffffff;
+	font-size: 14px;
+}
+
+a {
+	/* リンクの色を変更しない */
+	color: inherit;
+}
