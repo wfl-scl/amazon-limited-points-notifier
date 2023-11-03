@@ -31,7 +31,7 @@ async function main() {
 
 	addElement(`期間限定ポイント: ${storageItems['limitedPoints']}`);
 
-	const expiration = storageItems['expiration'];
+	const expiration = storageItems['limitedPointsExpiration'];
 	let expirationString;
 	if (expiration != null) {
 		expirationString = new Date(expiration).toLocaleDateString(

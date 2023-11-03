@@ -25,11 +25,23 @@ async function fetchLimitedPointsAsync() {
 	const response = await fetch('https://www.amazon.co.jp/mypoints');
 	const html = await response.text();
 	const document = new DOMParser().parseFromString(html, 'text/html');
-	const element = document.querySelector(
+	const points = document.querySelector(
 		'[data-testid="time-limited-available-points-value"]' // 期間限定ポイント
 		//'[data-testid="available-regular-points-value"]' // 通常ポイント
 	);
-	return element?.textContent.trim();
+	const result = {
+		limitedPoints: points?.textContent.trim()
+	};
+	const expiration = document.querySelector(
+		'[data-testid="expiry-table-expired-date"] .display-expiry-date-text' // 期間限定ポイント
+		//'[data-testid="regular-points-expired-date"] .display-expiry-date-text' // 通常ポイント
+	);
+	if (expiration != null) {
+		// textContentは後から設定されるっぽいのでdatasetから取得する
+		const milliseconds = parseInt(expiration.dataset['dateTimestamp']);
+		result['limitedPointsExpiration'] = new Date(milliseconds).toISOString();
+	}
+	return result;
 }
 
 async function tryAddLimitedPointElementAsync(limitedPoints) {
@@ -75,9 +87,9 @@ async function mainAsync() {
 	}
 
 	if (updateRequired) {
-		const limitedPoint = await fetchLimitedPointsAsync();
-		if (limitedPoint != null) {
-			storageItems['limitedPoints'] = limitedPoint;
+		const limitedPoints = await fetchLimitedPointsAsync();
+		if (limitedPoints != null) {
+			Object.assign(storageItems, limitedPoints);
 			storageItems['lastUpdate'] = new Date().toISOString();
 			storage.set(storageItems);
 
