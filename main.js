@@ -40,6 +40,8 @@ async function fetchLimitedPointsAsync() {
 		// textContentは後から設定されるっぽいのでdatasetから取得する
 		const milliseconds = parseInt(expiration.dataset['dateTimestamp']);
 		result['limitedPointsExpiration'] = new Date(milliseconds).toISOString();
+	} else {
+		result['limitedPointsExpiration'] = null;
 	}
 	return result;
 }
