@@ -19,7 +19,7 @@ async function main() {
 	const storage = browser.storage.local;
 	const storageItems = await storage.get(null);
 
-	if (!('limitedPoints' in storageItems)) {
+	if (storageItems['limitedPoints'] == null) {
 		addElement('データがありません。');
 		addLinkElement(
 			'https://www.amazon.co.jp',

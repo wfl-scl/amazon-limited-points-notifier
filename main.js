@@ -81,7 +81,7 @@ async function mainAsync() {
 	const storageItems = await storage.get(null);
 
 	let updateRequired;
-	if ('lastUpdate' in storageItems) {
+	if (storageItems['lastUpdate'] != null) {
 		const lastUpdate = new Date(storageItems['lastUpdate']);
 		updateRequired = new Date() > lastUpdate.setSeconds(lastUpdate.getSeconds() + updateInterval);
 	} else {
@@ -103,7 +103,7 @@ async function mainAsync() {
 		}
 	}
 
-	if ('limitedPoints' in storageItems) {
+	if (storageItems['limitedPoints'] != null) {
 		await tryAddLimitedPointElementAsync(storageItems['limitedPoints']);
 	}
 }

@@ -1,7 +1,7 @@
 
 function updateBadge(storageItems) {
 	let showBadge, textColor, badgeColor;
-	if ('limitedPoints' in storageItems) {
+	if (storageItems['limitedPoints'] != null) {
 		// 期間限定ポイントが残っているときのバッジ
 		showBadge = storageItems['limitedPoints'] !== '0';
 		textColor = '#000000';
